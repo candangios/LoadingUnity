@@ -16,26 +16,35 @@
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <div id="unity-container" class="unity-desktop"><canvas id="unity-canvas" width="768" height="1024"></canvas>
-    <!-- <div id="loading-cover">
+    <div id="loading-cover">
       <div id="background-cover">
         <div id="content-cover">
-          <span id="title-cover">PRO TIPS</span>
-          <span id="tips-cover">Mollector Studio “summons" talents from all walks of life. We are game designers, developers, entrepreneurs, storytellers, 2D artists, illustrators,...with decades of passion, professional</span>
-          <!-- <div id="unity-loading-bar">
-            <div id="unity-logo"></div>
-            <div id="unity-progress-bar-empty">
-              <div id="unity-progress-bar-full"></div>
+          <div id="header-cover">
+            <span id="title-cover">PRO TIPS</span>
+          </div>
+
+          <img id="line-cover" src="TemplateData/lineSeperateContent2x.png">
+          <span id="tips-cover">Mollector Studio “summons" talents from all walks of life. We are game designers,
+            developers, entrepreneurs, storytellers, 2D artists, illustrators,...with decades of passion,
+            professional</span>
+          <div id="unity-loading-bar">
+            <div id="unity-progress-bar-full"></div>
+            <div id="unity-progress-bar-empty"></div>
+            <div id="indicator-percent-cover">
+              <span id="percent-text-cover">0%</span>
             </div>
-          </div> -->
-        <!-- </div>
-  
-      </div> --> 
-    <div id="unity-loading-bar">
+          </div>
+          <span id="branch-cover">Game AMP.XML</span>
+          <span id="version-cover">Mollector ver 2.2.1</span>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
           <div id="unity-progress-bar-full"></div>
         </div>
-      </div>
+      </div> -->
     <div id="unity-mobile-warning">WebGL builds are not supported on mobile devices.</div>
     <div id="unity-footer">
       <div id="unity-webgl-logo"></div>
@@ -63,6 +72,7 @@
     var progressBarFull = document.querySelector("#unity-progress-bar-full");
     var fullscreenButton = document.querySelector("#unity-fullscreen-button");
     var mobileWarning = document.querySelector("#unity-mobile-warning");
+    var percentText = document.querySelector("#percent-text-cover");
 
     // By default Unity keeps WebGL canvas render target size matched with
     // the DOM size of the canvas element (scaled by window.devicePixelRatio)
@@ -90,7 +100,9 @@
     script.src = loaderUrl;
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
-        progressBarFull.style.width = 100 * progress + "%";
+        let value = 100 * progress
+        percentText.textContent = parseInt(value)+'%' 
+        progressBarFull.style.width = value + "%";
       }).then((unityInstance) => {
         loadingBar.style.display = "none";
         fullscreenButton.onclick = () => {
